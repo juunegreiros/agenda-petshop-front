@@ -1,41 +1,26 @@
 import React from 'react'
 import petsApi from '../../../api/pets'
+import { Query } from 'react-apollo'
 
-class Visualizar extends React.Component {
-  constructor(props) {
-    super(props)
+import { BUSCAR_PET } from '../../../graphql/pets'
+const Visualizar = (props) => (
+  <div>
+    <h1>Visualizar Pet</h1>
+    <Query query={BUSCAR_PET} variables={{ id: props.match.params.id }}> 
+      {({ carregando, error, data }) => {
+        const pet = data.pet || {}
+        return (
+          <>
+            <p>Nome: {pet.nome}</p>
+            <p>Tipo: {pet.tipo}</p>
+            <p>Dono: {pet.dono}</p>
+            <p>Observações: {pet.observacoes}</p>
+          </>
+        )
+      }}
+    </Query>
+  </div>
+)
 
-    this.state = {
-      nome: '',
-      dono: '',
-      tipo: '',
-      observacoes: ''
-    }
-  }
-
-  componentDidMount() {
-    const { id } = this.props.match.params
-    petsApi.buscarPetPorId(id)
-      .then(pet => this.setState({
-        nome: pet.nome,
-        tipo: pet.tipo,
-        dono: pet.donoId,
-        observacoes: pet.observacoes
-      }))
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Visualizar Pet</h1>
-
-        <p>Nome: {this.state.nome}</p>
-        <p>Tipo: {this.state.tipo}</p>
-        <p>Dono: {this.state.dono}</p>
-        <p>Observações: {this.state.observacoes}</p>
-       </div>
-    )
-  }
-}
 
 export default Visualizar

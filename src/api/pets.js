@@ -1,27 +1,27 @@
-import { api } from './config'
+import { restApi } from './config'
 
 const listarPets = () => 
-  api
+  restApi
     .get('/pets')
     .then(resposta => resposta.data)
 
 const buscarPetPorId = id => 
-  api
+  restApi
     .get(`/pets/pet/${id}`)
     .then(resposta => resposta.data[0])
 
 const adicionarPet = pet => 
-  api
+  restApi
     .post('/pets/pet', pet)
     .then(resposta => resposta.data)
 
 const alterarPet = (id, pet) =>
-  api
+  restApi
     .put(`/pets/pet/${id}`, pet)
     .then(resposta => resposta.data)
 
 const removerPet = id => 
-  api
+  restApi
     .delete(`/pets/pet/${id}`)
     .then(resposta => resposta.data)
 
