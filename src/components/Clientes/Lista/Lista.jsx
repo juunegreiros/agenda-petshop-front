@@ -28,7 +28,7 @@ class Clientes extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <div className="header">
           <h1>Clientes</h1>
 
           <Link to="/clientes/novo">Novo Cliente </Link>

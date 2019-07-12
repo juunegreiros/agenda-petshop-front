@@ -28,7 +28,7 @@ class Pets extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <div className="header">
           <h1>Pets</h1>
 
           <Link to="/pets/novo">Novo Pet </Link>
