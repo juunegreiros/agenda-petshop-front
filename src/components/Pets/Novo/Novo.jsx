@@ -31,7 +31,7 @@ class Novo extends React.Component {
     adicionarPet({
       variables: this.state,
     })
-    this.props.history.push('/pets')
+    // this.props.history.push('/pets')
   }
 
   render() {
@@ -40,52 +40,67 @@ class Novo extends React.Component {
         <h1>Novo Pet</h1>
 
         <Mutation mutation={ADICIONAR_PET}>
-          {(adicionarPet, resposta) => (
-            <form onSubmit={this.gerenciarEnvio.bind(this, adicionarPet)}>
-              <div>
-                <label htmlFor="nome">Nome</label>
-                <input
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  value={this.state.nome}
-                  onChange={this.gerenciarMudancas}
-                />
-              </div>
-              <div>
-                <label htmlFor="donoId">dono</label>
-                <input
-                  type="string"
-                  name="donoId"
-                  id="donoId"
-                  value={this.state.donoId}
-                  onChange={this.gerenciarMudancas}
-                />
-              </div>
-              <div>
-                <label htmlFor="tipo">tipo</label>
-                <input
-                  type="text"
-                  name="tipo"
-                  id="tipo"
-                  value={this.state.tipo}
-                  onChange={this.gerenciarMudancas}
-                />
-              </div>
-              <div>
-                <label htmlFor="observacoes">observacoes</label>
-                <input
-                  type="text"
-                  name="observacoes"
-                  id="observacoes"
-                  value={this.state.observacoes}
-                  onChange={this.gerenciarMudancas}
-                />
-              </div>
+          {(adicionarPet, resposta) => {
+            console.log(resposta)
+            if (resposta.loading) {
+              return <p>Carregando...</p>
+            }
 
-              <button type="submit">Enviar</button>
-            </form>
-          )}
+            if (resposta.error) {
+              console.log('erro', resposta.error.networkError.result)
+              return (
+                <p>
+                  Erro: {resposta.error.networkError.result.errors[0].message}
+                </p>
+              )
+            }
+            return (
+              <form onSubmit={this.gerenciarEnvio.bind(this, adicionarPet)}>
+                <div>
+                  <label htmlFor="nome">Nome</label>
+                  <input
+                    type="text"
+                    name="nome"
+                    id="nome"
+                    value={this.state.nome}
+                    onChange={this.gerenciarMudancas}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="donoId">dono</label>
+                  <input
+                    type="string"
+                    name="donoId"
+                    id="donoId"
+                    value={this.state.donoId}
+                    onChange={this.gerenciarMudancas}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="tipo">tipo</label>
+                  <input
+                    type="text"
+                    name="tipo"
+                    id="tipo"
+                    value={this.state.tipo}
+                    onChange={this.gerenciarMudancas}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="observacoes">observacoes</label>
+                  <input
+                    type="text"
+                    name="observacoes"
+                    id="observacoes"
+                    value={this.state.observacoes}
+                    onChange={this.gerenciarMudancas}
+                  />
+                </div>
+
+                <button type="submit">Enviar</button>
+              </form>
+            )
+          }}
         </Mutation>
       </div>
     )
